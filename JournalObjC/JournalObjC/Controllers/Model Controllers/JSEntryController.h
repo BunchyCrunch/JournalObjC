@@ -13,13 +13,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JSEntryController : NSObject
 
-@property (nonatomic, copy, readonly) NSArray * entries;
+@property (nonatomic, strong, readonly) NSMutableArray * entries;
 
 + (JSEntryController *)sharedController;
 
 - (void)addEntry:(JSEntry *)entry;
 - (void)removeEntry:(JSEntry *)entry;
 
+-(void)saveToPersistentStorage;
 @end
 
 NS_ASSUME_NONNULL_END

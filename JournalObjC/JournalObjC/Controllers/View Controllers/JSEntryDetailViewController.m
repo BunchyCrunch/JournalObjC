@@ -18,24 +18,41 @@
 
 @implementation JSEntryDetailViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self updateViews];
 }
 
 - (void)updateViews
 {
     if (!self.entry) return;
     self.titleTextField.text = self.entry.title;
-    self.bodyTextView.bodyText = self.entry.bodyText;
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    self.bodyTextView.text = self.entry.bodyText;
 }
-*/
+- (IBAction)saveButtontapped:(id)sender
+{
+    if (self.entry)
+    {
+        self.entry.title = self.titleTextField.text;
+        self.entry.bodyText = self.bodyTextView.text;
+        self.entry.timeStamp = [NSDate date];
+    } else {
+        JSEntry *entry = [[JSEntry alloc] initWithEntry:self.titleTextField.text bodyText:self.bodyTextView.text timeStamp:[NSDate date]];
+        
+        [[JSEntryController sharedController] addEntry:entry];
+        
+        [[JSEntryController sharedController]saveToPersistentStorage];
+        
+        self.entry = entry;
+    }
+    
+    [self.navigationController popViewControllerAnimated:true];
+}
+
+- (IBAction)clearButtonTapped:(id)sender {
+    self.titleTextField.text = @"";
+    self.bodyTextView.text = @"";
+}
 
 @end

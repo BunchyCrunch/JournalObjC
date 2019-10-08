@@ -11,14 +11,16 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface JSEntry : NSObject
-@property (nonatomic, copy, readonly) NSDate * timeStamp;
-@property (nonatomic, copy, readonly) NSString * title;
-@property (nonatomic, copy, readonly) NSString * bodyText;
+@property (nonatomic, strong) NSDate * timeStamp;
+@property (nonatomic, strong) NSString * title;
+@property (nonatomic, strong) NSString * bodyText;
 
 - (instancetype)initWithEntry: (NSString *) title
                      bodyText: (NSString *) bodyText
                     timeStamp: (NSDate *) timeStamp;
 
+-(instancetype)initWithDictionary:(NSDictionary *)dictionary;
+-(NSDictionary *)dictionaryRepresentation;
 
 @end
 
